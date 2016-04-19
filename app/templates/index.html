@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title%}test web{% endblock%}
+{% block scripts %}
+{{ super() }}
+{{ pagedown.include_pagedown() }}
+{% endblock %}
+
+{% block page_content %}
+
+<div class="row">
+
+        <div class="col-sm-8 blog-main">
+
+          
+        {% for post in posts %}
+          <div class="blog-post">
+            <h2 class="blog-post-title"><a href="/detail/{{post.id}}">{{ post.title }}</a></h2>
+            <p class="blog-post-meta">{{post.timestamp}} <a href="#">{{post.author}}</a></p>
+
+            <p>{{post.content_html|safe}}</p>
+          </div><!-- /.blog-post -->
+          {% endfor %}
+
+        </div><!-- /.blog-main -->
+        
+       {% include 'sidebar.html'%}
+
+      </div><!-- /.row -->
+
+{% endblock %}
