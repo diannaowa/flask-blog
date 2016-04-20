@@ -16,7 +16,10 @@ def index():
 
 @main.route('/detail/<int:p_id>')
 def detail(p_id):
-	return 'Plz log in'
+
+	post = Posts.query.filter_by(id=p_id).first()
+
+	return render_template('detail.html',post = post)
 
 
 @main.route('/post',methods=['GET','POST'])
@@ -24,8 +27,37 @@ def detail(p_id):
 def post():
 	form = PostForm()
 	if form.validate_on_submit():
-		post = Posts(title = form.title.data,content = form.content.data,author=current_user.username)
+		post = Posts(title = form.title.data,brief=form.brief.data,content = form.content.data,author=current_user.username)
 		db.session.add(post)
 		flash('Post entry OK')
 		#return redirect(url_for('.index'))
 	return render_template('post.html',form=form)
+
+
+
+@main.route('/edit/<int:p_id>',methods=['GET','POST'])
+@login_required
+def edit(p_id):
+	post = Posts.query.filter_by(id=p_id).first()
+	form = PostForm()
+
+	if form.validate_on_submit():
+		post.title = form.title.data
+		post.brief = form.brief.data
+		post.content = form.content.data
+		db.session.add(post)
+		flash('Edit entry OK')
+
+	form.title.data = post.title
+	form.brief.data = post.brief
+	form.content.data = post.content
+	return render_template('edit.html',post=post,form=form)
+
+
+@main.route('/del/<int:p_id>')
+@login_required
+def delete(p_id):
+	post = Posts.query.filter_by(id=p_id).first()
+	db.session.delete(post)
+	flash('Delete entry OK')
+	return redirect(url_for('.index'))

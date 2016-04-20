@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% block title%}test web{% endblock%}
+
 
 {% block page_content %}
+<div class="row">
 	<div class="page-header">
 	<h1>Register</h1>
 	</div>
@@ -10,5 +11,6 @@
 	{{ wtf.quick_form(form) }}
 	</div>
 	<p>
-	
+</p>
+</div>	
 {% endblock %}

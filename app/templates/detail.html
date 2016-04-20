@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% import "bootstrap/wtf.html" as wtf %}
-
 {% block scripts %}
 {{ super() }}
 {{ pagedown.include_pagedown() }}
@@ -12,20 +11,12 @@
 
         <div class="col-sm-8 blog-main">
 
-          
-        {% for post in posts %}
           <div class="blog-post">
             <h2 class="blog-post-title"><a href="{{url_for('.detail',p_id=post.id)}}">{{ post.title }}</a></h2>
-            <p class="blog-post-meta">{{post.timestamp}}  by {{post.author}} 
-              {% if current_user.username==post.author%} <a href="{{url_for('.edit',p_id=post.id)}}">Edit</a> 
-              | 
-              <a href="{{url_for('.delete',p_id=post.id)}}">Del</a>
-              {%endif%}
-            </p>
+            <p class="blog-post-meta">{{post.timestamp}}  by {{post.author}} </p>
             <hr>
-            <p>{{post.brief|safe}}</p>
+            <p>{{post.content_html|safe}}</p>
           </div><!-- /.blog-post -->
-          {% endfor %}
 
         </div><!-- /.blog-main -->
         

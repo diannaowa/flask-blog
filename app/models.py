@@ -14,6 +14,7 @@ class Posts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255))
     author = db.Column(db.String(100))
+    brief = db.Column(db.String(300))
     content = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.datetime.now())
     content_html = db.Column(db.Text)
