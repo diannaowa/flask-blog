@@ -5,6 +5,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config():
 	SECRET_KEY='hahahhaah'
 	SQLALCHEMY_COMMIT_ON_TEARDOWN = True
+	POSTS_PER_PAGE = 20
 
 	@staticmethod
 	def init_app(app):
@@ -28,5 +29,6 @@ config = {
 	'development':DevelopmentConfig,
 	'production':ProductionConfig,
 
-	'default':DevelopmentConfig
+	'default':DevelopmentConfig,
+
 }

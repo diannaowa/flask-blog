@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% import "bootstrap/wtf.html" as wtf %}
+{% import "_pages.html" as page %}
 
 {% block scripts %}
 {{ super() }}
@@ -26,7 +27,9 @@
             <p>{{post.brief|safe}}</p>
           </div><!-- /.blog-post -->
           {% endfor %}
-
+          <div class="pagination">
+          {{ page.pagination_widget(pagination, '.index') }}
+          </div>
         </div><!-- /.blog-main -->
         
        {% include 'sidebar.html'%}

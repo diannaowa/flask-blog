@@ -1,5 +1,5 @@
 #coding=utf-8
-from flask import render_template,session,redirect,url_for,flash
+from flask import render_template,session,redirect,url_for,flash,request,current_app
 
 from . import main
 from .forms import PostForm
@@ -10,8 +10,14 @@ from flask.ext.login import login_required,current_user
 
 @main.route('/',methods=['GET'])
 def index():
-	posts = Posts.query.order_by(Posts.timestamp.desc()).all()
-	return render_template('index.html',posts = posts)
+	page = request.args.get('page', 1, type=int)
+	pagination = Posts.query.order_by(Posts.timestamp.desc()).paginate(
+			page, per_page=current_app.config['POSTS_PER_PAGE'],
+			error_out=False)
+	
+	posts = pagination.items
+
+	return render_template('index.html',posts = posts,pagination=pagination)
 
 
 @main.route('/detail/<int:p_id>')
