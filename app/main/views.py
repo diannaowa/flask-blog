@@ -24,7 +24,8 @@ def index():
 def detail(p_id):
 
 	post = Posts.query.filter_by(id=p_id).first()
-
+	if post is None:
+		return render_template('404.html'),404
 	return render_template('detail.html',post = post)
 
 
@@ -45,6 +46,8 @@ def post():
 @login_required
 def edit(p_id):
 	post = Posts.query.filter_by(id=p_id).first()
+	if post is None:
+		return render_template('404.html'),404
 	form = PostForm()
 
 	if form.validate_on_submit():
