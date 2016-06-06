@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block scripts%}
+	{{super()}}
+	<script src="{{ url_for('static', filename = 'scripts/container.js') }}"></script>
+{% endblock%}
+
+{% block page_content %}
+<div class="row">
+	<div class="page-header">
+	<h1>Containers</h1>
+	</div>
+	
+	<div class="pull-right" style="margin:0px 0px 10px 0px;"><a href="{{url_for('.create_container')}}" class="btn btn-primary " role="button">New Container</a></div>
+
+	<table class="table table-hover">
+	 <tr>
+	  <th>Name</th>
+	  <th>Image</th>
+	  <th>Command</th>
+
+	  <th>State</th>
+	  <th>Status</th>
+	  <th>Created</th>
+	  <th></th>
+	</tr>
+	{% for c in containers %}
+	  <tr {% if c.State == 'running' %} class="success" {%endif%}>
+	  <td><a href="{{url_for('.container_detail',c_id=c.Id)}}" target="_blank">{{';'.join(c.Names)}}</a></td>
+	  <td>{{c.Image}}</td>
+	  <td>{{c.Command}}</td>
+	  <td>{{c.State}}</td>
+	  <td>{{c.Status}}</td>
+	  <td>{{c.Created | datetimeformat}}</td>
+	  <td>{% if c.State == 'running' %}<a href="javascript:void(0);" class="stop_c" data="{{c.Id}}">Stop</a>{%else%}<a href="javascript:void(0);" class="run_c" data="{{c.Id}}">Run</a>{%endif%} | <a href="javascript:void(0);" class="remove_c" data="{{c.Id}}">Remove</a></td>
+	</tr>
+	{% endfor %}
+	</table>
+
+</div>
+{% endblock %}

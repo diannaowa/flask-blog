@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block page_content %}
+<div class="row">
+	<div class="page-header">
+	<h3>Container</h3>
+	</div>
+
+	<form class="form-horizontal" method="POST" action="{{url_for('.create_container')}}">
+		  <div class="form-group">
+		    <label for="Name" class="col-sm-2 control-label">Name</label>
+		    <div class="col-sm-4">
+		      <input type="text" name="name" class="form-control" id="Name" placeholder="Name">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="Image" class="col-sm-2 control-label">Image</label>
+		    <div class="col-sm-4">
+		    	 <select class="form-control" name="image">
+		    	 {% for image in images %}
+					  {% for tag in image.get("RepoTags") %}
+					  	<option value="{{tag}}">{{tag}}</option>
+					  {%endfor%}
+		    	 {% endfor %}
+					 
+				</select>
+		    </div>
+		  </div>
+		   <div class="form-group">
+		    <label for="expose" class="col-sm-2 control-label">Expose</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="expose" name="expose" placeholder="Port number,TCP just.">
+		    </div>
+		  </div>
+		   <div class="form-group">
+				  <label for="Volume" class="col-sm-2 control-label">Volume</label>
+				  <div class="col-xs-2">
+				    <input type="text" class="form-control" name="host_path" placeholder="host path">
+				  </div>
+				  <div class="col-xs-2">
+				    <input type="text" class="form-control" name="container_path" placeholder="container path">
+				  </div>
+				  <div class="col-xs-1">
+				   	<select class="form-control" name="mode">
+					  <option value="ro">ro</option>
+					  <option value="rw">rw</option>
+					</select>
+				  </div>
+				
+			</div>
+
+			<div class="form-group">
+				  <label for="port_bind" class="col-sm-2 control-label">Port bind</label>
+				  <div class="col-xs-2">
+				    <input type="text" class="form-control" name="host_port" placeholder="host port">
+				  </div>
+				  <div class="col-xs-2">
+				    <input type="text" class="form-control" name="container_port" placeholder="container port">
+				  </div>
+				 
+			</div>
+
+		  <!-- <div class="form-group">
+		    <div class="col-sm-offset-2 col-sm-10">
+		      <div class="checkbox">
+		        <label>
+		          <input type="checkbox" name="start" checked="1"> Start me
+		        </label>
+		      </div>
+		    </div>
+		  </div> -->
+		  <div class="form-group">
+		    <div class="col-sm-offset-2 col-sm-10">
+		      <button type="submit" class="btn btn-default">Create</button>
+		    </div>
+		  </div>
+</form>
+
+
+
+
+	
+	<p>
+</p>
+</div>	
+{% endblock %}
