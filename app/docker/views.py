@@ -75,3 +75,9 @@ def pull():
 @login_required
 def ws():
 	return render_template('ws/ws.html')
+
+
+@docker.route('/images',methods=['GET'])
+@login_required
+def images():
+	pass
