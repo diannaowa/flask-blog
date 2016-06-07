@@ -1,9 +1,9 @@
 #coding=utf-8
 from flask import render_template,redirect,request,url_for,flash
 from flask.ext.login import login_user,login_required,logout_user
-import jinja2
+from flask_sockets import Sockets
 from . import docker
-from forms import ContainerForm
+
 from utils import client
 import json
 
@@ -64,3 +64,14 @@ def remove_container(c_id):
 	return json.dumps({'state':True})
 
 
+
+@docker.route('/pull',methods=['GET'])
+@login_required
+def pull():
+	return render_template('docker/pull.html')
+
+#for test
+@docker.route('/ws',methods=['GET'])
+@login_required
+def ws():
+	return render_template('ws/ws.html')

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block scripts%}
+    {{super()}}
+     <script>
+        $(document).ready(function() {
+            if (!window.WebSocket) {
+                if (window.MozWebSocket) {
+                    window.WebSocket = window.MozWebSocket;
+                } else {
+                    $('#messages').append("<li>Your browser doesn't support WebSockets.</li>");
+                }
+            }
+            ws = new WebSocket('ws://172.30.80.91:8000/ws/echo');
+            ws.onopen = function(evt) {
+                $('#messages').append('<li>Connected to chat.</li>');
+            }
+             ws.onclose = function(evt) {
+                $('#messages').append('<li>Closed to chat.</li>');
+            }
+            ws.onmessage = function(evt) {
+                $('#messages').append('<li>' + evt.data + '</li>');
+            }
+            ws.onerror = function(evt) {
+                $('#messages').append('<li>' + evt.data + '</li>');
+            }
+            $('#send-message').submit(function() {
+                ws.send($('#name').val() + ": " + $('#message').val());
+                $('#message').val('').focus();
+                return false;
+            });
+
+            $("a.close").bind("click",function(){
+                ws.close();
+            })
+        });
+    </script>
+{% endblock%}
+
+{% block page_content %}
+<div class="row">
+    <div class="page-header">
+    <h1>Test WS</h1>
+    </div>
+    
+ 
+<form id="send-message" class="form-inline">
+        <input id="name" type="text" value="可以更换名字">
+        <input id="message" type="text" value="要扯淡的内容" />
+       &nbsp; <button class="btn btn-success" type="submit">Send</button> <a class="btn btn-success close" type="button">Close</a>
+    </form>
+    <div id="messages"></div>
+
+</div>
+{% endblock %}
