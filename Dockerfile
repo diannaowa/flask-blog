@@ -1,5 +1,5 @@
 FROM ubuntu:14.04
-MAINTAINER walter.liu@yeahmobi.com
+MAINTAINER zwliu@thoughtworks.com
 
 RUN mkdir -p /data && mkdir /var/log/supervisor
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
