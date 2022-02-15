@@ -16,7 +16,7 @@ SQLAlchemy==1.0.12
 WTForms==2.1
 Werkzeug==0.11.8
 alembic==0.8.6
-bleach==1.4.2
+bleach==3.3.0
 dominate==2.2.0
 html5lib==0.9999999
 itsdangerous==0.24
